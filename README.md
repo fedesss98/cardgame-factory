@@ -27,8 +27,10 @@ full playable preview with fullscreen and chapter/deck debugging controls. Downl
 Android projects on a separate build computer; Android Studio is not required on
 this authoring PC. See the [remaining implementation plan](docs/implementation-plan.md).
 
-Stage A is implemented: use **Expand playtest**, **Fullscreen** or **Test controls**
-in the preview. Chapter/deck scenarios and overrides affect only the test session.
+Stage A is implemented: use **Expand playtest**, **Fullscreen preview** or **Test
+controls** in the preview. Fullscreen preview shows the game alone, full viewport
+(with safe areas on mobile), with a floating × or Escape to exit; the run is kept.
+Chapter/deck scenarios and overrides affect only the test session.
 Use **Apply latest edits · restart** to refresh the frozen content, and **Step back**
 to rewind a test. `npm run build:web` rebuilds the frontend without creating archives.
 Stage C adds undo/redo, safe card management, bulk deck membership, an image library

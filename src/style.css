@@ -1206,6 +1206,89 @@ summary:focus-visible {
     overflow: auto;
   }
 }
+/* Fullscreen preview: the game alone, no authoring chrome, with a floating exit.
+   It stays fixed to the viewport even when the browser refuses native fullscreen. */
+.playtest-workspace.presenting {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 0;
+  box-shadow: none;
+  background: #10161a;
+  color: #f5f4ef;
+}
+.playtest-workspace.presenting .playtest-toolbar,
+.playtest-workspace.presenting > p,
+.playtest-workspace.presenting .playtest-stage > .hint {
+  display: none;
+}
+.playtest-workspace.presenting .playtest-layout {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  max-width: none;
+  margin: 0;
+}
+.playtest-workspace.presenting .playtest-stage {
+  position: static;
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  overflow: auto;
+}
+.playtest-workspace.presenting .player {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+  padding: max(18px, env(safe-area-inset-top))
+    max(16px, env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom))
+    max(16px, env(safe-area-inset-left));
+  border-radius: 0;
+  box-shadow: none;
+  box-sizing: border-box;
+}
+.playtest-workspace.presenting .player-actions {
+  margin-top: auto;
+}
+.presentation-exit {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + 12px);
+  right: calc(env(safe-area-inset-right, 0px) + 12px);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid #ffffff4d;
+  border-radius: 50%;
+  background: #10161ab3;
+  color: #ffffff;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 4px 14px #0000004d;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.presentation-exit:hover,
+.presentation-exit:focus-visible {
+  background: #10161ae6;
+}
 /* Shared revision and conflict workflows. */
 .team-bar small {
   display: block;

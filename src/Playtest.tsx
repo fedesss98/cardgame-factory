@@ -58,6 +58,7 @@ export function Playtest({
   const [values, setValues] = useState<Record<string, string>>({});
   const [forced, setForced] = useState(""),
     [expanded, setExpanded] = useState(false),
+    [presenting, setPresenting] = useState(false),
     [debug, setDebug] = useState(false),
     [message, setMessage] = useState("");
   const root = useRef<HTMLDivElement>(null),
@@ -107,8 +108,7 @@ export function Playtest({
     intervention?: TraceIntervention,
   ) => {
     setFrames((old) => [...old.slice(-199), make(old[old.length - 1])]);
-    if (intervention)
-      setInterventions((old) => [...old, intervention]);
+    if (intervention) setInterventions((old) => [...old, intervention]);
   };
   const edit = (key: string, value: string) =>
     setValues((old) => ({ ...old, [key]: value }));
@@ -176,20 +176,28 @@ export function Playtest({
       setMessage((e as Error).message);
     }
   }
-  function close() {
+  function exitNativeFullscreen() {
     if (document.fullscreenElement === root.current)
       void document.exitFullscreen().catch(() => {});
+  }
+  function close() {
+    exitNativeFullscreen();
+    setPresenting(false);
     setExpanded(false);
   }
+  function closePresentation() {
+    exitNativeFullscreen();
+    setPresenting(false);
+  }
   useEffect(() => {
-    if (!expanded || !root.current) return;
+    if ((!expanded && !presenting) || !root.current) return;
     const container = root.current;
     let nativeActive = document.fullscreenElement === container;
     function fullscreenChanged() {
       if (document.fullscreenElement === container) nativeActive = true;
       else if (nativeActive) {
         nativeActive = false;
-        setExpanded(false);
+        setPresenting(false);
       }
     }
     document.addEventListener("fullscreenchange", fullscreenChanged);
@@ -209,7 +217,8 @@ export function Playtest({
     function key(e: KeyboardEvent) {
       if (e.key === "Escape") {
         e.preventDefault();
-        close();
+        if (presenting) closePresentation();
+        else close();
       }
       if (e.key === "Tab") {
         const focusable = Array.from(
@@ -244,17 +253,18 @@ export function Playtest({
       });
       opener.current?.focus();
     };
-  }, [expanded]);
-  async function fullscreen() {
-    setExpanded(true);
+  }, [expanded, presenting]);
+  async function present() {
+    if (!g || !frame) return;
+    setPresenting(true);
     setDebug(false);
     if (root.current) root.current.scrollTop = 0;
     try {
       if (!root.current?.requestFullscreen) throw Error();
       await root.current.requestFullscreen();
-      setMessage("");
     } catch {
-      setMessage("Browser fullscreen is unavailable. Expanded view is active.");
+      // The fixed full-viewport layout is the fallback when native
+      // fullscreen is refused; nothing else is needed.
     }
   }
   const stale =
@@ -265,11 +275,25 @@ export function Playtest({
     <div
       ref={root}
       tabIndex={-1}
-      className={"playtest-workspace" + (expanded ? " expanded" : "")}
-      role={expanded ? "dialog" : undefined}
-      aria-modal={expanded || undefined}
-      aria-label="Playtest workspace"
+      className={
+        "playtest-workspace" +
+        (expanded ? " expanded" : "") +
+        (presenting ? " presenting" : "")
+      }
+      role={expanded || presenting ? "dialog" : undefined}
+      aria-modal={expanded || presenting || undefined}
+      aria-label={presenting ? "Fullscreen game preview" : "Playtest workspace"}
     >
+      {presenting && (
+        <button
+          className="presentation-exit"
+          aria-label="Exit fullscreen preview"
+          title="Exit fullscreen preview (Esc)"
+          onClick={closePresentation}
+        >
+          ×
+        </button>
+      )}
       <div className="playtest-toolbar">
         <strong>Playtest</strong>
         <button
@@ -278,7 +302,9 @@ export function Playtest({
         >
           {expanded ? "Back to editor" : "Expand playtest"}
         </button>
-        <button onClick={() => void fullscreen()}>Fullscreen</button>
+        <button disabled={!g || !frame} onClick={() => void present()}>
+          Fullscreen preview
+        </button>
         <button
           aria-pressed={debug && expanded}
           onClick={() => {
@@ -320,10 +346,7 @@ export function Playtest({
               session={{
                 state: frame.state,
                 choose: (side) =>
-                  push(
-                    (old) => step(g, old, side),
-                    { kind: "choice", side },
-                  ),
+                  push((old) => step(g, old, side), { kind: "choice", side }),
                 restart: () => startRun(scenario),
               }}
             />
@@ -515,10 +538,10 @@ export function Playtest({
                   disabled={!forced}
                   onClick={() =>
                     attempt(() =>
-                      push(
-                        () => forceCard(g, frame, forced),
-                        { kind: "force", cardId: forced },
-                      ),
+                      push(() => forceCard(g, frame, forced), {
+                        kind: "force",
+                        cardId: forced,
+                      }),
                     )
                   }
                 >
@@ -592,8 +615,8 @@ export function Playtest({
                         {report.choices.map((choice) => (
                           <li key={choice.step}>
                             Step {choice.step} · {choice.chapter} ·{" "}
-                            {choice.character || choice.card || "unknown card"} ·{" "}
-                            {choice.side || "?"}: {choice.label}
+                            {choice.character || choice.card || "unknown card"}{" "}
+                            · {choice.side || "?"}: {choice.label}
                             {choice.ending ? ` → ending ${choice.ending}` : ""}
                           </li>
                         ))}
@@ -618,7 +641,8 @@ export function Playtest({
                     <p className="hint">
                       Cards: {report.unreached.cards.join(", ") || "none"}.
                       <br />
-                      Chapters: {report.unreached.chapters.join(", ") || "none"}.
+                      Chapters: {report.unreached.chapters.join(", ") || "none"}
+                      .
                       <br />
                       Endings: {report.unreached.endings.join(", ") || "none"}.
                     </p>
