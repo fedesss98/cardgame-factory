@@ -1,0 +1,10 @@
+# Site-wide security headers for the Game Factory editor.
+# Kept inside <IfModule> so hosts without mod_headers still serve the site;
+# if AllowOverride forbids these directives, delete this file and add the
+# equivalent headers in the hosting panel instead.
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Referrer-Policy "same-origin"
+  Header always set Strict-Transport-Security "max-age=31536000"
+</IfModule>

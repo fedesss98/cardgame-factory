@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+server/vendor/
+
+# Build output and deployable archives
+dist/
+.build/
+release/
+public/export-template.zip
+public/player-runtime/
+*.zip
+
+# Local configuration and secrets
+server/config.php
+game-factory-private/
+.env
+.env.*
+!.env.example
+*.keystore
+*.jks
+.api_token
+tools/setup-token-output.txt
+
+# Editor and operating-system files
+.vscode/
+.idea/
+*.log
+.DS_Store
+Thumbs.db

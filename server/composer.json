@@ -1,0 +1,5 @@
+{
+  "name": "game-factory/server",
+  "description": "Private collaboration API for Game Factory",
+  "require": {"php": ">=8.2", "ext-pdo": "*", "ext-pdo_mysql": "*", "ext-mbstring": "*", "ext-fileinfo": "*", "opis/json-schema": "^2.6"}
+}

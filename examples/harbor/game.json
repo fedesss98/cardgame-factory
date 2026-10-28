@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "harbor",
+  "title": "Harbor Council",
+  "description": "Small design fixture: prepare the harbor, then decide how to weather a storm.",
+  "contentVersion": 1,
+  "saveCompatibilityVersion": 1,
+  "language": "en",
+  "theme": {
+    "preset": "classic", "background": "#142B3B", "surface": "#F7EED9",
+    "text": "#15232B", "accent": "#B45C34", "font": "system-serif"
+  },
+  "assets": [{"id": "harbor-art", "kind": "image", "path": "assets/harbor.png", "credit": "Procedural placeholder created for this project", "license": "Project-owned placeholder"}],
+  "stats": [
+    {"id": "supplies", "name": "Supplies", "min": 0, "max": 100, "initial": 50},
+    {"id": "trust", "name": "Trust", "min": 0, "max": 100, "initial": 50}
+  ],
+  "flags": [
+    {"id": "merchant-helped", "name": "Helped the merchant", "initial": false, "scope": "run"},
+    {"id": "storm-resolved", "name": "Resolved the storm", "initial": false, "scope": "run"}
+  ],
+  "cards": [
+    {
+      "id": "merchant", "character": "Merchant", "imageAssetId": "harbor-art", "imageAlt": "A simple harbor silhouette",
+      "text": "Will you repair my storehouse before the storm?", "repeat": "oncePerRun",
+      "left": {"label": "Keep our supplies", "effects": [{"kind": "statDelta", "statId": "trust", "delta": -10}]},
+      "right": {"label": "Help repair it", "effects": [{"kind": "statDelta", "statId": "supplies", "delta": -10}, {"kind": "setFlag", "flagId": "merchant-helped", "value": true}], "followUpCardId": "thanks"}
+    },
+    {
+      "id": "thanks", "character": "Merchant", "imageAssetId": "harbor-art", "imageAlt": "A simple harbor silhouette",
+      "text": "My workers will stand with you.", "repeat": "oncePerRun",
+      "when": {"mode": "all", "rules": [{"kind": "flag", "flagId": "merchant-helped", "value": true}]},
+      "left": {"label": "Gather supplies", "effects": [{"kind": "statDelta", "statId": "supplies", "delta": 10}]},
+      "right": {"label": "Reassure the town", "effects": [{"kind": "statDelta", "statId": "trust", "delta": 10}]}
+    },
+    {
+      "id": "watch", "character": "Harbor Watch", "imageAssetId": "harbor-art", "imageAlt": "A simple harbor silhouette",
+      "text": "The wind is rising. Shall we close the harbor?", "repeat": "unlimited",
+      "left": {"label": "Keep trading", "effects": [{"kind": "statDelta", "statId": "supplies", "delta": 10}]},
+      "right": {"label": "Close the gates", "effects": [{"kind": "statDelta", "statId": "trust", "delta": 10}]}
+    },
+    {
+      "id": "storm", "character": "Captain", "imageAssetId": "harbor-art", "imageAlt": "A simple harbor silhouette",
+      "text": "The storm has arrived. Where do we send our crews?", "repeat": "oncePerRun",
+      "left": {"label": "Protect the stores", "effects": [{"kind": "statDelta", "statId": "trust", "delta": -20}, {"kind": "setFlag", "flagId": "storm-resolved", "value": true}]},
+      "right": {"label": "Rescue the boats", "effects": [{"kind": "statDelta", "statId": "supplies", "delta": -20}, {"kind": "setFlag", "flagId": "storm-resolved", "value": true}]}
+    }
+  ],
+  "decks": [
+    {"id": "preparation", "name": "Preparation", "mode": "ordered", "cards": [{"cardId": "merchant", "weight": 1}, {"cardId": "watch", "weight": 1}]},
+    {"id": "storm-deck", "name": "Storm", "mode": "weighted", "cards": [{"cardId": "storm", "weight": 1}]}
+  ],
+  "chapters": [
+    {"id": "prepare", "name": "Before the storm", "onEnter": [], "decks": [{"deckId": "preparation", "weight": 1}], "transitions": [{"when": {"mode": "all", "rules": [{"kind": "turn", "scope": "chapter", "op": "gte", "value": 2}]}, "toChapterId": "weather"}]},
+    {"id": "weather", "name": "Weather the storm", "onEnter": [], "decks": [{"deckId": "storm-deck", "weight": 1}], "transitions": []}
+  ],
+  "endings": [
+    {"id": "empty-stores", "title": "Empty stores", "text": "The harbor has run out of supplies.", "priority": 100, "when": {"mode": "all", "rules": [{"kind": "stat", "statId": "supplies", "op": "lte", "value": 0}]}},
+    {"id": "survived", "title": "A new morning", "text": "The harbor survived. Your choices will be remembered.", "priority": 10, "when": {"mode": "all", "rules": [{"kind": "flag", "flagId": "storm-resolved", "value": true}]}},
+    {"id": "no-events", "title": "Quiet waters", "text": "There are no further encounters in this story.", "priority": 0}
+  ],
+  "startChapterId": "prepare",
+  "fallbackEndingId": "no-events",
+  "android": {"applicationId": "com.example.harbor", "displayName": "Harbor Council", "versionName": "0.1.0", "versionCode": 1, "iconAssetId": "harbor-art"}
+}

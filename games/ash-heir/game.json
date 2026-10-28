@@ -1,0 +1,1433 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "erede-di-cenere",
+  "title": "L'Erede di Cenere",
+  "description": "Sei Cael Voss, figlio del Signore delle Lanterne. Tuo padre governa il mercato nero di Ossara, ma da mesi non esce più di casa. Ascolta qualcosa sotto la cappella. Le famiglie rivali aspettano che cada; tuo fratello Ren aspetta che tu gli dica la verità. Quando la villa prenderà fuoco, avrai il tempo di salvare una sola vita. Forse nemmeno quella.",
+  "contentVersion": 3,
+  "saveCompatibilityVersion": 2,
+  "language": "it",
+  "theme": {
+    "preset": "storybook",
+    "background": "#120D0B",
+    "surface": "#F2E7D5",
+    "text": "#231710",
+    "accent": "#B9542A",
+    "font": "system-serif"
+  },
+  "assets": [
+    {
+      "id": "blank-art",
+      "kind": "image",
+      "path": "assets/blank.png",
+      "credit": "Segnaposto neutro del progetto",
+      "license": "Proprietà del progetto"
+    }
+  ],
+  "stats": [
+    {
+      "id": "influenza",
+      "name": "Influenza",
+      "min": 0,
+      "max": 20,
+      "initial": 8
+    },
+    {
+      "id": "legame",
+      "name": "Legame",
+      "min": 0,
+      "max": 20,
+      "initial": 10
+    },
+    {
+      "id": "sangue-freddo",
+      "name": "Sangue freddo",
+      "min": 0,
+      "max": 20,
+      "initial": 10
+    }
+  ],
+  "flags": [
+    {
+      "id": "padre-fragile",
+      "name": "Hai domandato al padre",
+      "initial": false,
+      "scope": "run"
+    },
+    {
+      "id": "sussurri",
+      "name": "Hai ascoltato il muro",
+      "initial": false,
+      "scope": "run"
+    },
+    {
+      "id": "fiducia-ren",
+      "name": "Ren ti ha raccontato la verità",
+      "initial": false,
+      "scope": "run"
+    },
+    {
+      "id": "ultimatum",
+      "name": "La Concordia ha dato l'ultimatum",
+      "initial": false,
+      "scope": "run"
+    },
+    {
+      "id": "padre-implora",
+      "name": "Il padre ti ha chiesto il fuoco",
+      "initial": false,
+      "scope": "run"
+    },
+    {
+      "id": "fine-prima",
+      "name": "La prima parte è finita",
+      "initial": false,
+      "scope": "run"
+    },
+    {
+      "id": "fiamma",
+      "name": "La prima fiamma è caduta",
+      "initial": false,
+      "scope": "run"
+    },
+    {
+      "id": "scelta-fratello",
+      "name": "Sei salito verso Ren",
+      "initial": false,
+      "scope": "run"
+    },
+    {
+      "id": "scelta-da-solo",
+      "name": "Hai cercato la porta del giardino",
+      "initial": false,
+      "scope": "run"
+    },
+    {
+      "id": "risolto-ren",
+      "name": "La sorte di Ren è decisa",
+      "initial": false,
+      "scope": "run"
+    },
+    {
+      "id": "risolto-solo",
+      "name": "La tua fuga è decisa",
+      "initial": false,
+      "scope": "run"
+    }
+  ],
+  "cards": [
+    {
+      "id": "credito-prologo",
+      "character": "Cael",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Il Mercato delle Lanterne di sera, tra barche e fanali",
+      "text": "Al Mercato delle Lanterne sanno già che stai arrivando. Quando attraversi il ponte delle Becche, le voci calano; restano lo sciabordio delle barche e l'odore dell'olio bruciato. Tuo padre non riscuote i debiti di persona da tre mesi. Nessuno ne chiede il motivo. La vedova della filanda ti apre con le mani arrossate dalla canapa. Deve sei corone a casa Voss. Dietro di te, due facchine aspettano di vedere se le prenderai.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "credito"
+      },
+      "right": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "credito"
+      }
+    },
+    {
+      "id": "credito",
+      "character": "Cael",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Il Mercato delle Lanterne di sera, tra barche e fanali",
+      "text": "«Ne ho già restituite quattro», dice la donna. «Il bambino ha la febbre. Datemi una settimana.» Dalla stanza accanto arriva un colpo di tosse, poi un altro, più debole. A cena tuo padre conterà le monete con la mano che non riesce più a tenere ferma. Se ne mancheranno sei, vorrà sapere perché. La vedova ti guarda; le facchine guardano lei. Il mercato trattiene il fiato.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Prendi le sei corone",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "influenza",
+            "delta": 1
+          },
+          {
+            "kind": "statDelta",
+            "statId": "legame",
+            "delta": -1
+          }
+        ]
+      },
+      "right": {
+        "label": "Concedile un'altra settimana",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "legame",
+            "delta": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "inviato-prologo",
+      "character": "L'inviato di casa Aurel",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Un portico di pietra con un giovane in livrea d'ambra",
+      "text": "Stai restituendo le chiavi della dogana al vecchio Pima quando un giovane in livrea d'ambra ti raggiunge sulla riva. Porta l'anello di casa Aurel. Sotto il polsino, per un istante, intravedi la falce d'argento dei Serrin. «Le famiglie sono in pensiero per vostro padre», dice. Sorride senza mostrare i denti.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "inviato"
+      },
+      "right": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "inviato"
+      }
+    },
+    {
+      "id": "inviato",
+      "character": "L'inviato di casa Aurel",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Un portico di pietra con un giovane in livrea d'ambra",
+      "text": "«Non partecipa più alle riunioni. Le sue finestre restano accese fino all'alba. Qualcuno sostiene di averlo sentito parlare da solo.» Ti porge una coppa di vino. Sull'altra sponda del fiume, due uomini si fermano a osservare. «La Concordia può offrire aiuto, Cael. E a un erede giovane può offrire un posto.» La coppa resta sospesa tra voi. Se la prendi, sapranno che hai ascoltato. Se la rifiuti, sapranno anche quello.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Bevi e ascolta",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "influenza",
+            "delta": 1
+          },
+          {
+            "kind": "statDelta",
+            "statId": "sangue-freddo",
+            "delta": -1
+          }
+        ]
+      },
+      "right": {
+        "label": "Mandalo indietro senza una parola",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "influenza",
+            "delta": -1
+          },
+          {
+            "kind": "statDelta",
+            "statId": "sangue-freddo",
+            "delta": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "registro-prologo",
+      "character": "Marius Voss",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Uno scrittoio a lume di cera con un registro aperto",
+      "text": "Entri nello studio senza bussare. Tuo padre è chino sul registro, accanto a una candela di cera verde. Scrive lentamente. A ogni lettera la penna gli sfugge di qualche millimetro, ma lui la riporta sulla riga e continua. Quando gira pagina, vedi la firma in fondo al foglio: Odric Voss. Tuo nonno è morto vent'anni fa. Hai visto tu stesso la sua lapide a Sarengo.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "registro"
+      },
+      "right": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "registro"
+      }
+    },
+    {
+      "id": "registro",
+      "character": "Marius Voss",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Uno scrittoio a lume di cera con un registro aperto",
+      "text": "«Sono conti in ordine», dice tuo padre senza alzare gli occhi. La voce è ferma; soltanto la mano trema. «Non c'è niente da correggere.» La cera cola sul legno. Per un momento ti sembra che la firma continui a formarsi anche dopo che la penna si è fermata. Tuo padre posa il palmo sul foglio e finalmente ti guarda. «Cael. Dimmi che è tutto in ordine.»",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Chiudi il registro in fretta",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "influenza",
+            "delta": 1
+          },
+          {
+            "kind": "statDelta",
+            "statId": "sangue-freddo",
+            "delta": -1
+          }
+        ]
+      },
+      "right": {
+        "label": "Chiedigli perché firma come Odric",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "sangue-freddo",
+            "delta": 1
+          },
+          {
+            "kind": "setFlag",
+            "flagId": "padre-fragile",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "medico-prologo",
+      "character": "Il medico di casa",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Un cortile d'ombra con un pozzo al centro",
+      "text": "Il medico ti porta dietro il pozzo, fuori dalla vista dei domestici. Ha ancora la borsa degli strumenti in mano. «Il cuore è sano. Anche i polmoni.» Guarda verso le finestre della villa prima di continuare.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "medico-intermezzo"
+      },
+      "right": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "medico-intermezzo"
+      }
+    },
+    {
+      "id": "medico-intermezzo",
+      "character": "Il medico di casa",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Un cortile d'ombra con un pozzo al centro",
+      "text": "«Stanotte l'ho sentito parlare nella sua stanza. Prima con la propria voce. Poi con un'altra.» Gli chiedi se tuo padre è impazzito. Il medico scuote il capo. «Non so cosa gli stia succedendo. So che, quando ho bussato, entrambe le voci hanno smesso nello stesso istante.»",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "medico"
+      },
+      "right": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "medico"
+      }
+    },
+    {
+      "id": "medico",
+      "character": "Il medico di casa",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Un cortile d'ombra con un pozzo al centro",
+      "text": "Da settimane gli Aurel chiedono notizie della sua salute; i Serrin pagano i servi perché ascoltino alle porte. Una voce sbagliata potrebbe costare a casa Voss tutto il mercato. Ren, tuo fratello, dorme nel corridoio vicino alla stanza di vostro padre. Ha sedici anni e non sa nulla di questo colloquio. Il medico aspetta che tu gli dica chi può conoscere la verità.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Non dire nulla a Ren",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "influenza",
+            "delta": 1
+          },
+          {
+            "kind": "statDelta",
+            "statId": "legame",
+            "delta": -1
+          },
+          {
+            "kind": "setFlag",
+            "flagId": "fiducia-ren",
+            "value": false
+          }
+        ]
+      },
+      "right": {
+        "label": "Confidati a Ren e raccontagli tutto",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "legame",
+            "delta": 1
+          },
+          {
+            "kind": "setFlag",
+            "flagId": "fiducia-ren",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "muro-prologo",
+      "character": "Il muro della cappella",
+      "imageAssetId": "blank-art",
+      "imageAlt": "La parete di pietra di una cappella, spessa e buia",
+      "text": "Trovi tuo padre nella cappella, seduto davanti alla lastra murata dietro l'altare. Ha l'orecchio premuto contro la pietra. Nessuna candela arde in quella parte della navata: ogni volta che ne avvicini una, la fiamma si piega verso il muro e si spegne. «Sono ancora qui», sussurra. Poi si volta. «Vieni, Cael. Puoi sentirli anche tu.»",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "muro"
+      },
+      "right": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "muro"
+      }
+    },
+    {
+      "id": "muro",
+      "character": "Il muro della cappella",
+      "imageAssetId": "blank-art",
+      "imageAlt": "La parete di pietra di una cappella, spessa e buia",
+      "text": "Ti inginocchi accanto a lui. Dalla pietra arriva un suono lieve, regolare. Potrebbe essere acqua nelle fondamenta. Potrebbero essere dita che battono dall'altra parte. Tuo padre ti prende il polso e lo posa sulla lastra. È tiepida. «Non sono morti», dice. «Aspettano.» Nel corridoio oltre la porta, i passi di un domestico si allontanano in fretta. Tuo padre non ti lascia il polso. Il battito nel muro riprende, questa volta alla stessa cadenza del tuo cuore.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Ascolta il muro con lui",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "sangue-freddo",
+            "delta": -1
+          },
+          {
+            "kind": "setFlag",
+            "flagId": "sussurri",
+            "value": true
+          }
+        ]
+      },
+      "right": {
+        "label": "Fallo bere l'oppio e portalo a letto",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "influenza",
+            "delta": 1
+          },
+          {
+            "kind": "statDelta",
+            "statId": "sangue-freddo",
+            "delta": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "erede-prologo",
+      "character": "Marius Voss",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Una cantina illuminata da un solo lume, con una grata a terra",
+      "text": "Nella cantina, durante la notte del Ridocchio, tuo padre ti chiama lontano dagli altri. Le botti sono accatastate intorno alla vecchia inferriata che chiude la cisterna. Nessuno in famiglia sa chi l'abbia fatta murare lì. Dal basso sale odore di fiume, benché la cisterna sia asciutta da anni. «Sei il mio erede», dice Marius. Ti afferra per le spalle; la sua mano destra non trema più.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "erede"
+      },
+      "right": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "erede"
+      }
+    },
+    {
+      "id": "erede",
+      "character": "Marius Voss",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Una cantina illuminata da un solo lume, con una grata a terra",
+      "text": "«Per questo devi ascoltarmi. La casa deve bruciare. Tutta. Anche la cappella.» Un colpo risuona contro l'inferriata. Marius si volta di scatto. Dal fondo della cisterna, con la sua stessa voce, qualcuno pronuncia il tuo nome. Tuo padre è qui, davanti a te, e le sue labbra non si sono mosse. Quando torna a guardarti, aspetta una risposta.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Prometti che la casa resterà in piedi",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "legame",
+            "delta": 1
+          },
+          {
+            "kind": "setFlag",
+            "flagId": "fine-prima",
+            "value": true
+          }
+        ]
+      },
+      "right": {
+        "label": "Chiedigli cosa ha visto sotto",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "sangue-freddo",
+            "delta": -1
+          },
+          {
+            "kind": "setFlag",
+            "flagId": "sussurri",
+            "value": true
+          },
+          {
+            "kind": "setFlag",
+            "flagId": "fine-prima",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "scavo-prologo",
+      "character": "Il capomastro",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Il pavimento di una cappella aperto in una buca",
+      "text": "L'ordine di aprire la lastra della cappella porta la firma di tuo padre. È la sua, almeno a guardarla; la calligrafia è troppo sicura per appartenere alla mano che hai visto tremare. Quattro operai sollevano la pietra. Sotto appare un vano di mattoni umidi e una porta stretta, senza maniglia. L'aria che ne esce è calda.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "scavo"
+      },
+      "right": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "scavo"
+      }
+    },
+    {
+      "id": "scavo",
+      "character": "Il capomastro",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Il pavimento di una cappella aperto in una buca",
+      "text": "«Non mi piace», mormora il capomastro. Appoggia la punta del piccone sul pavimento. Il metallo vibra. «Là sotto c'è qualcosa che si muove.» Un operaio si china a osservare la fessura sotto la porta. Si rialza subito e si pulisce le dita sui pantaloni. Non vuole dirti cosa ha visto. Tuo padre è immobile sul pianerottolo, gli occhi fissi sul varco. Ren tiene la lanterna in fondo alla navata. Guarda te, in attesa di un ordine.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Lascia continuare lo scavo",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "influenza",
+            "delta": 1
+          },
+          {
+            "kind": "statDelta",
+            "statId": "sangue-freddo",
+            "delta": -1
+          }
+        ]
+      },
+      "right": {
+        "label": "Fai richiudere la lastra",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "influenza",
+            "delta": -1
+          },
+          {
+            "kind": "statDelta",
+            "statId": "legame",
+            "delta": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "concordia-prologo",
+      "character": "La Concordia",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Una lettera aperta con tre sigilli di cera",
+      "text": "La lettera porta tre sigilli: Aurel, Serrin, Dax. La Concordia chiede che tuo padre venga affidato agli Aurel «per custodia e per cura». Lo chiamano un soggiorno. Non indicano una data di ritorno. Rileggi la clausola e posi il foglio sul tavolo. Ren è sulla soglia; ha visto i sigilli e ha capito abbastanza da non fare domande.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "concordia"
+      },
+      "right": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "concordia"
+      }
+    },
+    {
+      "id": "concordia",
+      "character": "La Concordia",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Una lettera aperta con tre sigilli di cera",
+      "text": "Dalla piazza arrivano colpi di martello: gli uomini della Concordia stanno rinforzando il ponte. Nessuno costruisce barricate per una visita di cortesia. In fondo alla lettera c'è un'ultima riga, scritta con una grafia diversa: «Attendiamo risposta prima della terza notte.» Alzi gli occhi verso la finestra. Dall'altra parte del fiume, una luce si spegne. Poi un'altra. Gli uomini degli Aurel sono già in posizione.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Sfida la Concordia",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "influenza",
+            "delta": 1
+          },
+          {
+            "kind": "setFlag",
+            "flagId": "ultimatum",
+            "value": true
+          }
+        ]
+      },
+      "right": {
+        "label": "Chiedi una tregua",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "influenza",
+            "delta": -1
+          },
+          {
+            "kind": "statDelta",
+            "statId": "sangue-freddo",
+            "delta": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "ren-fiducia-prologo",
+      "character": "Ren Voss",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Un corridoio di casa con una finestra illuminata",
+      "text": "Ren ti raggiunge mentre studi le mappe della villa. Da quando gli hai raccontato del medico, dorme poco e tiene una lanterna pronta accanto al letto. Ora indica il corridoio dei servi, poi la porta sul giardino. «Se entrano dalla cappella, questa è la strada più breve.» Ha tracciato un percorso anche per la camera di vostro padre. Non gli hai chiesto di farlo.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "ren-fiducia"
+      },
+      "right": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "ren-fiducia"
+      },
+      "when": {
+        "mode": "all",
+        "rules": [
+          {
+            "kind": "flag",
+            "flagId": "fiducia-ren",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "ren-fiducia",
+      "character": "Ren Voss",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Un corridoio di casa con una finestra illuminata",
+      "text": "«Cael, guardami.» Aspetta che tu sollevi gli occhi. «Se scoppia un incendio, usciamo insieme. Non mi importa del registro, né del mercato. Tu e io.» Da fuori arriva il rumore di un carro che attraversa il ponte. Ren piega la mappa con cura, come se il futuro potesse restare al suo posto lungo quelle linee. Vuole una promessa. È abbastanza grande da sapere quanto può costare.",
+      "repeat": "oncePerRun",
+      "when": {
+        "mode": "all",
+        "rules": [
+          {
+            "kind": "flag",
+            "flagId": "fiducia-ren",
+            "value": true
+          }
+        ]
+      },
+      "left": {
+        "label": "Prometti che nessuno dei due finirà da solo",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "legame",
+            "delta": 2
+          }
+        ]
+      },
+      "right": {
+        "label": "Affidagli i turni di guardia",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "influenza",
+            "delta": 1
+          },
+          {
+            "kind": "statDelta",
+            "statId": "legame",
+            "delta": -1
+          }
+        ]
+      }
+    },
+    {
+      "id": "ren-timore-prologo",
+      "character": "Ren Voss",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Un corridoio buio con una porta socchiusa",
+      "text": "Ren ti aspetta in fondo alla scala, davanti alla cappella chiusa. «Ci passa le notti», dice. «L'ho seguito. Sta fermo contro il muro e parla con qualcuno.» Non rispondi. Ren vede subito che lo sapevi. «Da quanto tempo?» Dalla stanza di vostro padre arriva un rumore secco, come un mobile trascinato sul pavimento. Ren fa un passo verso di te, poi si ferma. Ha sedici anni; per mesi gli hai detto soltanto che Marius era stanco.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "ren-timore"
+      },
+      "right": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "ren-timore"
+      },
+      "when": {
+        "mode": "all",
+        "rules": [
+          {
+            "kind": "flag",
+            "flagId": "fiducia-ren",
+            "value": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "ren-timore",
+      "character": "Ren Voss",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Un corridoio buio con una porta socchiusa",
+      "text": "«Ho provato ad ascoltare anch'io», continua. «Non ho sentito niente. Ma ieri notte qualcuno ha risposto usando la sua voce. Lui era ancora al piano di sopra.» Un altro colpo risuona dietro la porta della cappella. Ren non si volta. Aspetta la tua risposta, con le mani chiuse lungo i fianchi.",
+      "repeat": "oncePerRun",
+      "when": {
+        "mode": "all",
+        "rules": [
+          {
+            "kind": "flag",
+            "flagId": "fiducia-ren",
+            "value": false
+          }
+        ]
+      },
+      "left": {
+        "label": "Rassicuralo",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "legame",
+            "delta": 1
+          }
+        ]
+      },
+      "right": {
+        "label": "Respingilo",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "influenza",
+            "delta": 1
+          },
+          {
+            "kind": "statDelta",
+            "statId": "legame",
+            "delta": -1
+          },
+          {
+            "kind": "statDelta",
+            "statId": "sangue-freddo",
+            "delta": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "lucido-prologo",
+      "character": "Marius Voss",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Il padre seduto in una stanza buia, guardando avanti",
+      "text": "Per un'ora tuo padre torna a essere l'uomo che conosci. Cammina senza aiuto, riconosce le firme dei debitori, nota perfino un errore nei conti. Poi chiude il registro. «Quello che c'è sotto la cappella ha imparato la mia voce», dice. «All'inizio la sentivo soltanto di notte. Ora la usa anche quando sono sveglio.»",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "lucido"
+      },
+      "right": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "lucido"
+      }
+    },
+    {
+      "id": "lucido",
+      "character": "Marius Voss",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Il padre seduto in una stanza buia, guardando avanti",
+      "text": "La candela fra voi si abbassa. Marius segue con gli occhi il suo riflesso nel vetro, ma il riflesso resta immobile quando lui gira il capo. «Brucia la casa, Cael. La cappella, la cisterna, tutto. Prima che trovi un'altra voce.» Si sporge verso di te. «Se io sono ancora qui quando comincia, non venire a prendermi.» Per un istante senti un raschio dentro la parete, vicino al pavimento. Marius lo sente. Stringe il bordo del tavolo e attende la tua promessa.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Prometti di bruciare la casa",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "sangue-freddo",
+            "delta": 1
+          },
+          {
+            "kind": "setFlag",
+            "flagId": "padre-implora",
+            "value": true
+          }
+        ]
+      },
+      "right": {
+        "label": "Rifiuta di promettere",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "legame",
+            "delta": -1
+          },
+          {
+            "kind": "statDelta",
+            "statId": "sangue-freddo",
+            "delta": -1
+          }
+        ]
+      }
+    },
+    {
+      "id": "varga-prologo",
+      "character": "La Mano di Cenere",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Tende di un campo mercenario oltre le mura della villa",
+      "text": "Alla terza sera le tende di casa Varga compaiono nei campi della Bissa. Cento lance, due stendardi rossi. Da questa distanza distingui la mano di cenere ricamata sul vessillo. Un tempo quegli uomini hanno combattuto per tuo padre. Ora qualcuno li ha pagati per aspettare fuori dalle mura. Il capitano ti manda un biglietto: «Quando il fuoco prende, nessuno apre più le porte.»",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "varga"
+      },
+      "right": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "varga"
+      }
+    },
+    {
+      "id": "varga",
+      "character": "La Mano di Cenere",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Tende di un campo mercenario oltre le mura della villa",
+      "text": "Griso, il vecchio mastro delle serrature, ti raggiunge nel corridoio. Due guardie mancano all'appello e le chiavi della porta a nord sono sparite. «Posso sostituire la serratura prima di mezzanotte», dice. «Oppure aprire il passaggio sul canale. Non ho uomini per fare entrambe le cose.» Dietro di lui, nella cappella vuota, una campana suona una volta. Nessuno la tocca da anni. Griso impallidisce e aspetta il tuo ordine.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Fortifica la villa",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "influenza",
+            "delta": 1
+          },
+          {
+            "kind": "statDelta",
+            "statId": "sangue-freddo",
+            "delta": 1
+          }
+        ]
+      },
+      "right": {
+        "label": "Prepara la via di fuga",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "legame",
+            "delta": 1
+          },
+          {
+            "kind": "statDelta",
+            "statId": "sangue-freddo",
+            "delta": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "prima-fiamma-prologo",
+      "character": "Il fuoco",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Una freccia infiammata che attraversa il cielo notturno",
+      "text": "La prima freccia incendiaria arriva dalle colline. Si conficca nel tetto delle stalle. Per un battito non succede nulla; poi le tegole cedono e una vampata illumina il cortile. «Le chiavi!» grida Griso dal piano terra. «Me le hanno prese!»",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "prima-fiamma"
+      },
+      "right": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "prima-fiamma"
+      }
+    },
+    {
+      "id": "prima-fiamma",
+      "character": "Il fuoco",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Una freccia infiammata che attraversa il cielo notturno",
+      "text": "Dal finestrone della biblioteca Ren chiama il tuo nome. È al secondo piano, già circondato dal fumo. Tuo padre è nell'ala oltre la cappella, chiusa da settimane. La chiave di quella porta è nella tua tasca. Una seconda freccia attraversa il cielo. Colpisce la galleria che unisce le due ali della villa. Il legno prende fuoco in un istante. Hai il tempo di correre in una sola direzione. Ren grida ancora; dall'ala di tuo padre non arriva alcun suono.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Corri a prendere Ren",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "legame",
+            "delta": 1
+          },
+          {
+            "kind": "setFlag",
+            "flagId": "fiamma",
+            "value": true
+          }
+        ]
+      },
+      "right": {
+        "label": "Cerca tuo padre nell'ala sigillata",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "sangue-freddo",
+            "delta": 1
+          },
+          {
+            "kind": "setFlag",
+            "flagId": "fiamma",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "fumo-prologo",
+      "character": "Il fuoco",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Una galleria piena di fumo con una porta luminosa in fondo",
+      "text": "Il pavimento cede mentre attraversi la villa. Quando riapri gli occhi sei nella galleria nuova, a faccia in giù. Non sai quanto tempo hai perso. Il fumo corre lungo il soffitto e comincia a scendere. Sotto una porta, in fondo al corridoio, filtra la luce verdastra del giardino. Piove. Riesci perfino a sentire l'odore dei tigli.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "fumo"
+      },
+      "right": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "fumo"
+      }
+    },
+    {
+      "id": "fumo",
+      "character": "Il fuoco",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Una galleria piena di fumo con una porta luminosa in fondo",
+      "text": "Poi Ren chiama il tuo nome da un piano più in alto. È vivo. Una scala di servizio sale verso la sua voce; il primo gradino è già acceso. Ti rimetti in piedi. Da qualche parte, sotto di te, una porta sbatte tre volte. Alla quarta senti tuo padre gridare. O qualcosa che grida come lui. Il fumo ti entra in bocca. Devi muoverti adesso.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Sali verso la voce di Ren",
+        "effects": [
+          {
+            "kind": "setFlag",
+            "flagId": "scelta-fratello",
+            "value": true
+          }
+        ],
+        "followUpCardId": "trave"
+      },
+      "right": {
+        "label": "Corri alla porta del giardino",
+        "effects": [
+          {
+            "kind": "setFlag",
+            "flagId": "scelta-da-solo",
+            "value": true
+          }
+        ],
+        "followUpCardId": "galleria"
+      }
+    },
+    {
+      "id": "trave-prologo",
+      "character": "Ren Voss",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Una trave in fiamme che blocca un corridoio",
+      "text": "Trovi Ren nella biblioteca. Una trave gli blocca le gambe; la quercia brucia alle estremità, ma il centro è ancora intero. La finestra sul cortile è a tre passi. «Cael.» Tossisce. «Non riesco a spostarla.» Ti chini, infili le mani sotto il legno e tiri. Non basta.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "trave"
+      },
+      "right": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "trave"
+      },
+      "when": {
+        "mode": "all",
+        "rules": [
+          {
+            "kind": "flag",
+            "flagId": "scelta-fratello",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "trave",
+      "character": "Ren Voss",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Una trave in fiamme che blocca un corridoio",
+      "text": "Sopra di voi il soffitto schiocca, una volta, poi un'altra. Il fuoco ha raggiunto le carte da parati; l'aria si fa rovente a ogni respiro. Ren ti afferra il polso. «Conta fino a tre», dice. «Come facevamo da piccoli.» Puoi restargli accanto e coprirlo quando cederà il soffitto, sperando in un varco tra le macerie. Oppure tirarlo fuori subito, attraverso le fiamme, prima che la trave si abbassi ancora. Ren aspetta il primo numero.",
+      "repeat": "oncePerRun",
+      "when": {
+        "mode": "all",
+        "rules": [
+          {
+            "kind": "flag",
+            "flagId": "scelta-fratello",
+            "value": true
+          }
+        ]
+      },
+      "left": {
+        "label": "Fai scudo col tuo corpo sopra di lui",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "legame",
+            "delta": 2
+          },
+          {
+            "kind": "statDelta",
+            "statId": "sangue-freddo",
+            "delta": 1
+          },
+          {
+            "kind": "setFlag",
+            "flagId": "risolto-ren",
+            "value": true
+          }
+        ]
+      },
+      "right": {
+        "label": "Trascinalo attraverso le fiamme",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "legame",
+            "delta": 1
+          },
+          {
+            "kind": "statDelta",
+            "statId": "sangue-freddo",
+            "delta": 2
+          },
+          {
+            "kind": "setFlag",
+            "flagId": "risolto-ren",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "galleria-prologo",
+      "character": "Il fuoco",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Un pavimento crollato davanti a una porta del giardino illuminata",
+      "text": "La galleria crolla davanti a te. Oltre il vuoto vedi la porta del giardino: una striscia di luce nella pioggia. Il salto è corto, se hai ancora fiato per prendere la rincorsa. Sotto i tuoi piedi resiste una trave sottile; più in basso si apre il passaggio dei servi. Puoi calarti là dentro, ma il fumo ne esce a ondate e non vedi dove finisca.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "galleria"
+      },
+      "right": {
+        "label": "Continua",
+        "effects": [],
+        "followUpCardId": "galleria"
+      },
+      "when": {
+        "mode": "all",
+        "rules": [
+          {
+            "kind": "flag",
+            "flagId": "scelta-da-solo",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "galleria",
+      "character": "Il fuoco",
+      "imageAssetId": "blank-art",
+      "imageAlt": "Un pavimento crollato davanti a una porta del giardino illuminata",
+      "text": "Dietro di te qualcosa si spezza con un suono profondo. Ti volti. Le fiamme hanno già raggiunto l'angolo. Stringi il bordo della parete per non perdere l'equilibrio. La trave sotto la suola scricchiola. Un altro passo fermo e cadrà con te. Devi scegliere mentre è ancora lì.",
+      "repeat": "oncePerRun",
+      "when": {
+        "mode": "all",
+        "rules": [
+          {
+            "kind": "flag",
+            "flagId": "scelta-da-solo",
+            "value": true
+          }
+        ]
+      },
+      "left": {
+        "label": "Salta il vuoto",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "sangue-freddo",
+            "delta": 2
+          },
+          {
+            "kind": "setFlag",
+            "flagId": "risolto-solo",
+            "value": true
+          }
+        ]
+      },
+      "right": {
+        "label": "Striscia nel passaggio dei servi",
+        "effects": [
+          {
+            "kind": "statDelta",
+            "statId": "sangue-freddo",
+            "delta": -1
+          },
+          {
+            "kind": "setFlag",
+            "flagId": "risolto-solo",
+            "value": true
+          }
+        ]
+      }
+    }
+  ],
+  "decks": [
+    {
+      "id": "mercato",
+      "name": "Il Mercato delle Lanterne",
+      "mode": "ordered",
+      "cards": [
+        {
+          "cardId": "credito-prologo",
+          "weight": 1
+        },
+        {
+          "cardId": "credito",
+          "weight": 1
+        },
+        {
+          "cardId": "inviato-prologo",
+          "weight": 1
+        },
+        {
+          "cardId": "inviato",
+          "weight": 1
+        },
+        {
+          "cardId": "registro-prologo",
+          "weight": 1
+        },
+        {
+          "cardId": "registro",
+          "weight": 1
+        },
+        {
+          "cardId": "medico-prologo",
+          "weight": 1
+        },
+        {
+          "cardId": "medico-intermezzo",
+          "weight": 1
+        },
+        {
+          "cardId": "medico",
+          "weight": 1
+        },
+        {
+          "cardId": "muro-prologo",
+          "weight": 1
+        },
+        {
+          "cardId": "muro",
+          "weight": 1
+        },
+        {
+          "cardId": "erede-prologo",
+          "weight": 1
+        },
+        {
+          "cardId": "erede",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "id": "casa",
+      "name": "La Casa dei Sussurri",
+      "mode": "ordered",
+      "cards": [
+        {
+          "cardId": "scavo-prologo",
+          "weight": 1
+        },
+        {
+          "cardId": "scavo",
+          "weight": 1
+        },
+        {
+          "cardId": "concordia-prologo",
+          "weight": 1
+        },
+        {
+          "cardId": "concordia",
+          "weight": 1
+        },
+        {
+          "cardId": "ren-fiducia-prologo",
+          "weight": 1
+        },
+        {
+          "cardId": "ren-fiducia",
+          "weight": 1
+        },
+        {
+          "cardId": "ren-timore-prologo",
+          "weight": 1
+        },
+        {
+          "cardId": "ren-timore",
+          "weight": 1
+        },
+        {
+          "cardId": "lucido-prologo",
+          "weight": 1
+        },
+        {
+          "cardId": "lucido",
+          "weight": 1
+        },
+        {
+          "cardId": "varga-prologo",
+          "weight": 1
+        },
+        {
+          "cardId": "varga",
+          "weight": 1
+        },
+        {
+          "cardId": "prima-fiamma-prologo",
+          "weight": 1
+        },
+        {
+          "cardId": "prima-fiamma",
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "id": "cenere",
+      "name": "La Notte di Cenere",
+      "mode": "ordered",
+      "cards": [
+        {
+          "cardId": "fumo-prologo",
+          "weight": 1
+        },
+        {
+          "cardId": "fumo",
+          "weight": 1
+        },
+        {
+          "cardId": "trave-prologo",
+          "weight": 1
+        },
+        {
+          "cardId": "trave",
+          "weight": 1
+        },
+        {
+          "cardId": "galleria-prologo",
+          "weight": 1
+        },
+        {
+          "cardId": "galleria",
+          "weight": 1
+        }
+      ]
+    }
+  ],
+  "chapters": [
+    {
+      "id": "mercato",
+      "name": "Parte prima — Il Mercato delle Lanterne",
+      "onEnter": [],
+      "decks": [
+        {
+          "deckId": "mercato",
+          "weight": 1
+        }
+      ],
+      "transitions": [
+        {
+          "when": {
+            "mode": "all",
+            "rules": [
+              {
+                "kind": "flag",
+                "flagId": "fine-prima",
+                "value": true
+              }
+            ]
+          },
+          "toChapterId": "casa"
+        }
+      ]
+    },
+    {
+      "id": "casa",
+      "name": "Parte seconda — La Casa dei Sussurri",
+      "onEnter": [],
+      "decks": [
+        {
+          "deckId": "casa",
+          "weight": 1
+        }
+      ],
+      "transitions": [
+        {
+          "when": {
+            "mode": "all",
+            "rules": [
+              {
+                "kind": "flag",
+                "flagId": "fiamma",
+                "value": true
+              }
+            ]
+          },
+          "toChapterId": "cenere"
+        }
+      ]
+    },
+    {
+      "id": "cenere",
+      "name": "Parte terza — La Notte di Cenere",
+      "onEnter": [],
+      "decks": [
+        {
+          "deckId": "cenere",
+          "weight": 1
+        }
+      ],
+      "transitions": []
+    }
+  ],
+  "endings": [
+    {
+      "id": "due-ombre",
+      "title": "Due ombre nel giardino",
+      "imageAssetId": "blank-art",
+      "priority": 50,
+      "text": "La finestra cede prima del soffitto. Tu e Ren cadete sul prato bagnato, fra vetri e schegge di legno. Per qualche secondo restate immobili. Poi lui tossisce, si aggrappa alla tua manica e comincia a respirare. Dietro di voi, il tetto della cappella sprofonda. Dalla cisterna sale un grido composto da troppe voci; si interrompe quando le travi in fiamme precipitano nel vano. Ren si mette a sedere. Ha il viso nero di fuliggine e una striscia di sangue sulla fronte. «Siamo fuori», dice, quasi senza crederci. Non gli rispondi subito. Conti i suoi respiri finché smettono di essere irregolari. Domani gli Aurel cercheranno i due figli di Marius Voss. Il mercato chiederà chi ha ordinato l'incendio. Stanotte Ren è qui, accanto a te, sotto la pioggia. Gli passi un braccio intorno alle spalle e vi allontanate dal fuoco.",
+      "when": {
+        "mode": "all",
+        "rules": [
+          {
+            "kind": "flag",
+            "flagId": "risolto-ren",
+            "value": true
+          },
+          {
+            "kind": "stat",
+            "statId": "legame",
+            "op": "gte",
+            "value": 12
+          }
+        ]
+      }
+    },
+    {
+      "id": "porta",
+      "title": "La porta che non si apre",
+      "imageAssetId": "blank-art",
+      "priority": 40,
+      "text": "La trave si muove di un palmo. Ren prova a liberare una gamba, ma il legno ricade e il suo grido si perde nel fragore del soffitto. Ti chini di nuovo. Il calore ti strappa la pelle dalle mani; non riesci più a sentire le dita. «Cael», dice Ren. Basta il tuo nome. Tiri ancora, finché il fumo non ti piega sulle ginocchia. Dalla finestra entra aria di pioggia. È vicina, abbastanza da vedere le gocce sul davanzale. Una parte del soffitto cede e separa Ren dalla luce. Lo chiami. Nessuna risposta. Quando il pavimento comincia a inclinarsi, resti dov'eri, con le mani sotto la quercia. Sul giardino la porta rimane aperta tutta la notte. Nessuno dei due la raggiunge.",
+      "when": {
+        "mode": "all",
+        "rules": [
+          {
+            "kind": "flag",
+            "flagId": "risolto-ren",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "ultimo-erede",
+      "title": "L'ultimo erede",
+      "imageAssetId": "blank-art",
+      "priority": 30,
+      "text": "Raggiungi la porta del giardino e la spalanchi con la spalla. L'aria fredda ti entra nei polmoni così in fretta che per un momento non riesci a respirare. Poi sei sul prato, sotto la pioggia. Aspetti di sentire passi alle tue spalle. Non arrivano. Ren è rimasto nella villa; tuo padre è nell'ala chiusa. Alle tue spalle le finestre si accendono una dopo l'altra, finché il fuoco raggiunge la cappella. Nel mercato, oltre il fiume, le lanterne continuano a brillare. Domani qualcuno ti chiamerà Signore delle Lanterne. Ti presenterà i debiti, le chiavi, il registro salvato da qualche servo. Ti guardi le mani, nere di fuliggine, e pensi alle firme di tuo padre. Sai che cosa dovrai ereditare. Sai anche chi non verrà a reclamarlo con te.",
+      "when": {
+        "mode": "all",
+        "rules": [
+          {
+            "kind": "flag",
+            "flagId": "risolto-solo",
+            "value": true
+          },
+          {
+            "kind": "stat",
+            "statId": "sangue-freddo",
+            "op": "gte",
+            "value": 10
+          }
+        ]
+      }
+    },
+    {
+      "id": "fumo-polmoni",
+      "title": "Fumo nei polmoni",
+      "imageAssetId": "blank-art",
+      "priority": 20,
+      "text": "La via che hai scelto ti porta verso la porta del giardino. La intravedi tra il fumo: una striscia di luce chiara, abbastanza vicina da distinguere la pioggia oltre il vetro. Provi ad avanzare, ma il calore ti svuota i polmoni. Ti fermi per tossire; quando riparti, le gambe non ti reggono. La luce si allontana. L'ultima cosa che senti è la pioggia sul davanzale. All'alba i Varga entrano nella villa spenta. Trovano il camino, le pareti della cappella e poco altro. Cercano l'erede fra le macerie finché un uomo non nota la porta del giardino ancora chiusa. Nel prato il tiglio gocciola ancora. Il mercato aspetta qualcuno che non arriverà.",
+      "when": {
+        "mode": "all",
+        "rules": [
+          {
+            "kind": "flag",
+            "flagId": "risolto-solo",
+            "value": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "casa-voss",
+      "title": "Casa Voss",
+      "imageAssetId": "blank-art",
+      "priority": 0,
+      "text": "Il fuoco raggiunge la scala principale e sale fino ai ritratti. I vetri esplodono; le tende cadono sui pavimenti già accesi. Sotto la cappella, qualcosa batte contro l'inferriata della cisterna. Un colpo. Un altro. Poi le travi cedono e il rumore si confonde con il resto della casa che crolla. Al mattino restano un perimetro di pietre calde e il camino, solo, contro il cielo grigio. Gli uomini della Concordia cercano il corpo di Marius. Cercano anche i suoi figli. Quando smettono di scavare, non sanno se abbiano trovato tutti. Sul mercato delle Lanterne passano giorni prima che qualcuno pronunci di nuovo il nome Voss ad alta voce."
+    }
+  ],
+  "startChapterId": "mercato",
+  "fallbackEndingId": "casa-voss",
+  "android": {
+    "applicationId": "it.fedeama.erededicenere",
+    "displayName": "L'Erede di Cenere",
+    "versionName": "1.0.0",
+    "versionCode": 1
+  }
+}

@@ -1,0 +1,242 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "ember-station",
+  "title": "Ember Station",
+  "description": "A visually distinct fixture: a dark, modern rescue story with persistent progress.",
+  "contentVersion": 1,
+  "saveCompatibilityVersion": 1,
+  "language": "en",
+  "theme": {
+    "preset": "minimal",
+    "background": "#0B1220",
+    "surface": "#E9F2FF",
+    "text": "#152033",
+    "accent": "#FFB347",
+    "font": "system-sans"
+  },
+  "assets": [
+    {
+      "id": "ember-art",
+      "kind": "image",
+      "path": "assets/ember.png",
+      "credit": "Procedural placeholder created for this project",
+      "license": "Project-owned placeholder"
+    }
+  ],
+  "stats": [
+    { "id": "power", "name": "Power", "min": 0, "max": 100, "initial": 50 },
+    { "id": "hope", "name": "Hope", "min": 0, "max": 100, "initial": 40 }
+  ],
+  "flags": [
+    {
+      "id": "signal-sent",
+      "name": "Signal sent",
+      "initial": false,
+      "scope": "run"
+    },
+    {
+      "id": "crew-safe",
+      "name": "Crew safe",
+      "initial": false,
+      "scope": "run"
+    },
+    {
+      "id": "ember-veteran",
+      "name": "Ember veteran",
+      "initial": false,
+      "scope": "persistent"
+    }
+  ],
+  "cards": [
+    {
+      "id": "signal",
+      "character": "Operator Vale",
+      "imageAssetId": "ember-art",
+      "imageAlt": "A dark relay tower against an amber sky",
+      "text": "The relay tower is failing. Every light on the console is red except one small amber switch.\n\n\"We can push the transmitter past its rated limit,\" Vale says. \"It may reach the rescue convoy. It may also take the last of our power with it. Or we can sit quiet and hope the storm passes before the batteries do.\"",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Boost the transmitter",
+        "effects": [
+          { "kind": "statDelta", "statId": "power", "delta": -15 },
+          { "kind": "statDelta", "statId": "hope", "delta": 10 },
+          { "kind": "setFlag", "flagId": "signal-sent", "value": true }
+        ],
+        "followUpCardId": "reply"
+      },
+      "right": {
+        "label": "Conserve power",
+        "effects": [
+          { "kind": "statDelta", "statId": "power", "delta": 10 },
+          { "kind": "statDelta", "statId": "hope", "delta": -5 }
+        ]
+      }
+    },
+    {
+      "id": "reply",
+      "character": "Unknown Voice",
+      "imageAssetId": "ember-art",
+      "imageAlt": "A dark relay tower against an amber sky",
+      "text": "A voice cuts through the static. It is calm, distant, and repeating the station's old call sign.",
+      "repeat": "oncePerRun",
+      "when": {
+        "mode": "all",
+        "rules": [{ "kind": "flag", "flagId": "signal-sent", "value": true }]
+      },
+      "left": {
+        "label": "Answer the signal",
+        "effects": [
+          { "kind": "statDelta", "statId": "hope", "delta": 15 },
+          { "kind": "setFlag", "flagId": "crew-safe", "value": true }
+        ]
+      },
+      "right": {
+        "label": "Cut the channel",
+        "effects": [
+          { "kind": "statDelta", "statId": "hope", "delta": -10 },
+          { "kind": "statDelta", "statId": "power", "delta": 10 }
+        ]
+      }
+    },
+    {
+      "id": "reactor",
+      "character": "Engineer Rook",
+      "imageAssetId": "ember-art",
+      "imageAlt": "A dark relay tower against an amber sky",
+      "text": "Rook is holding the reactor door open with one boot. The core is running hotter than the gauge admits.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Vent the core",
+        "effects": [
+          { "kind": "statDelta", "statId": "power", "delta": -20 },
+          { "kind": "statDelta", "statId": "hope", "delta": -10 },
+          { "kind": "setFlag", "flagId": "crew-safe", "value": true }
+        ]
+      },
+      "right": {
+        "label": "Hold steady",
+        "effects": [
+          { "kind": "statDelta", "statId": "power", "delta": 5 },
+          { "kind": "statDelta", "statId": "hope", "delta": 5 }
+        ]
+      }
+    },
+    {
+      "id": "dawn",
+      "character": "Station AI",
+      "imageAssetId": "ember-art",
+      "imageAlt": "A dark relay tower against an amber sky",
+      "text": "Dawn reaches the windows. The storm is thinning. The station has one decision left to make.",
+      "repeat": "oncePerRun",
+      "left": {
+        "label": "Send the rescue flare",
+        "effects": [
+          { "kind": "statDelta", "statId": "hope", "delta": 10 },
+          { "kind": "setFlag", "flagId": "crew-safe", "value": true },
+          { "kind": "setFlag", "flagId": "ember-veteran", "value": true }
+        ]
+      },
+      "right": {
+        "label": "Keep the station dark",
+        "effects": [
+          { "kind": "statDelta", "statId": "power", "delta": -10 },
+          { "kind": "statDelta", "statId": "hope", "delta": -10 }
+        ]
+      }
+    }
+  ],
+  "decks": [
+    {
+      "id": "opening",
+      "name": "Opening watch",
+      "mode": "ordered",
+      "cards": [
+        { "cardId": "signal", "weight": 1 },
+        { "cardId": "reactor", "weight": 1 }
+      ]
+    },
+    {
+      "id": "final-watch",
+      "name": "Final watch",
+      "mode": "weighted",
+      "cards": [{ "cardId": "dawn", "weight": 1 }]
+    }
+  ],
+  "chapters": [
+    {
+      "id": "blackout",
+      "name": "Blackout",
+      "onEnter": [
+        { "kind": "statDelta", "statId": "power", "delta": -5 }
+      ],
+      "decks": [{ "deckId": "opening", "weight": 1 }],
+      "transitions": [
+        {
+          "when": {
+            "mode": "all",
+            "rules": [
+              { "kind": "turn", "scope": "chapter", "op": "gte", "value": 2 }
+            ]
+          },
+          "toChapterId": "dawn-watch"
+        }
+      ]
+    },
+    {
+      "id": "dawn-watch",
+      "name": "Dawn watch",
+      "onEnter": [
+        { "kind": "statDelta", "statId": "hope", "delta": 5 }
+      ],
+      "decks": [{ "deckId": "final-watch", "weight": 1 }],
+      "transitions": []
+    }
+  ],
+  "endings": [
+    {
+      "id": "cold-station",
+      "title": "Cold station",
+      "text": "The last battery dies. The station goes quiet before the rescue convoy arrives.",
+      "priority": 100,
+      "when": {
+        "mode": "all",
+        "rules": [{ "kind": "stat", "statId": "power", "op": "lte", "value": 0 }]
+      }
+    },
+    {
+      "id": "lost-hope",
+      "title": "Lost hope",
+      "text": "The crew stops answering. The station survives, but no one believes it will be found.",
+      "priority": 90,
+      "when": {
+        "mode": "all",
+        "rules": [{ "kind": "stat", "statId": "hope", "op": "lte", "value": 0 }]
+      }
+    },
+    {
+      "id": "saved",
+      "title": "Amber dawn",
+      "text": "The rescue convoy answers the flare. Ember Station is still standing, and its crew is coming home.",
+      "priority": 20,
+      "when": {
+        "mode": "all",
+        "rules": [{ "kind": "flag", "flagId": "crew-safe", "value": true }]
+      }
+    },
+    {
+      "id": "silent-dark",
+      "title": "Silent dark",
+      "text": "There are no more decisions left in the dark. The station waits for a morning that may not come.",
+      "priority": 0
+    }
+  ],
+  "startChapterId": "blackout",
+  "fallbackEndingId": "silent-dark",
+  "android": {
+    "applicationId": "com.example.emberstation",
+    "displayName": "Ember Station",
+    "versionName": "0.1.0",
+    "versionCode": 1,
+    "iconAssetId": "ember-art"
+  }
+}
